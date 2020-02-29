@@ -12,6 +12,10 @@ with open("412File.txt", "r") as File:
     DateList=[]
     TimeZoneList=[]
     GETList=[]
+    FileRequestedList=[]
+    StatusCodeList=[]
+    
+    LocationDict={}
     
     for line in File:
         Line=line.split(" ")
@@ -23,6 +27,8 @@ with open("412File.txt", "r") as File:
         Date=Line[3] #Come back and remove leading " [ "
         TimeZone=Line[4] #Come back and remove ending " ] "
         GET=Line[5]
+        FileRequested=Line[6]
+        StatusCode=Line[-2] #I kept getting the error "list index out of range" when I tried to say Line[7]
         
         #append split data to it's respective list
         
@@ -32,6 +38,8 @@ with open("412File.txt", "r") as File:
         DateList.append(Date)
         TimeZoneList.append(TimeZone)
         GETList.append(GET)
+        FileRequestedList.append(FileRequested)
+        StatusCodeList.append(StatusCode)
         
         while Count<5: #This while loop is just so that it stops trying to run the whole data set because that's stressing my poor computer out
             print(Location)
@@ -40,7 +48,16 @@ with open("412File.txt", "r") as File:
             print(Date)
             print(TimeZone)
             print(GET)
+            print(FileRequested)
+            print(StatusCode)
             Count+=1
+            
+            for item in LocationList:
+                if item in LocationDict:
+                    LocationDict[item]+=1
+                else:
+                    LocationDict[item]=1
     
     print()
     print(f" There were {Count} total requests made in the time period requested in the log.")
+    print(LocationDict)
