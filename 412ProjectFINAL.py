@@ -16,6 +16,7 @@ with open("412File.txt", "r") as File:
     StatusCodeList=[]
     
     LocationDict={}
+    MonthDict={}
     
     for line in File:
         Line=line.split(" ")
@@ -24,8 +25,8 @@ with open("412File.txt", "r") as File:
         Location=Line[0]
         Dash=Line[1]
         Dash2=Line[2]
-        Date=Line[3] #Come back and remove leading " [ "
-        TimeZone=Line[4] #Come back and remove ending " ] "
+        Date=Line[3].strip("[") #Come back and remove leading " [ "
+        TimeZone=Line[4].strip("]") #Come back and remove ending " ] "
         GET=Line[5]
         FileRequested=Line[6]
         StatusCode=Line[-2] #I kept getting the error "list index out of range" when I tried to say Line[7]
@@ -57,7 +58,27 @@ with open("412File.txt", "r") as File:
                     LocationDict[item]+=1
                 else:
                     LocationDict[item]=1
+                    
+            #Find how many requests were made per month
+            for date in DateList:
+                DateSplit=date.split("/")
+                Day=DateSplit[:1]
+                Month=DateSplit[1]
+                Year=DateSplit[2]
+                
+                if Month in MonthDict:
+                    MonthDict[Month]+=1
+                else:
+                    MonthDict[Month]=1
+                    
+            #Use a for loop to print contents of MonthDict THIS WORKS!!!!!!!
+            
+            for key in MonthDict:
+                print(f"There were {MonthDict[key]} requests made in {key}")
+                
+            
     
     print()
     print(f" There were {Count} total requests made in the time period requested in the log.")
     print(LocationDict)
+    print(MonthDict)
