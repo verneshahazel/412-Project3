@@ -17,6 +17,7 @@ with open("412File.txt", "r") as File:
     
     LocationDict={}
     MonthDict={}
+    DayDict={}
     
     for line in File:
         Line=line.split(" ")
@@ -62,20 +63,29 @@ with open("412File.txt", "r") as File:
             #Find how many requests were made per month
             for date in DateList:
                 DateSplit=date.split("/")
-                Day=DateSplit[:1]
+                Day=str(DateSplit[0:1]) #Was getting error "unhashable type: list"
                 Month=DateSplit[1]
                 Year=DateSplit[2]
-                
+           
+           #Add and count contents in dictionaries     
+           
                 if Month in MonthDict:
                     MonthDict[Month]+=1
                 else:
                     MonthDict[Month]=1
                     
-            #Use a for loop to print contents of MonthDict THIS WORKS!!!!!!!
+                if Day in DayDict:
+                    DayDict[Day]+=1
+                else:
+                    DayDict[Day]=1
+                    
+            #Use a for loop to print contents of Dictionaries THIS WORKS!!!!!!!
             
             for key in MonthDict:
                 print(f"There were {MonthDict[key]} requests made in {key}")
                 
+            for key in DayDict:
+                print(f"There were {DayDict[key]} requests made on {key}")
             
     
     print()
